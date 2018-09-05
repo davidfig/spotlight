@@ -1,7 +1,7 @@
 const Penner = require('penner')
 
 /**
- * spotlight-ui: a canvas element that dims the screen except for spotlight locations formed by circles or polygons
+ * spotlight-canvas: a canvas element that dims the screen except for spotlight locations formed by circles or polygons
  */
 class Spotlight
 {
@@ -12,7 +12,6 @@ class Spotlight
      * @param {number} [options.y=0]
      * @param {number} [options.width=window.innerWidth]
      * @param {number} [options.height=window.innerHeight]
-     * @param {PIXI.Texture} [options.texture=PIXI.Texture.WHITE]
      * @param {number} [options.color=black] color of under layer
      * @param {number} [options.alpha=0.5] alpha of under layer
      * @param {HTMLElement} [options.parent=document.body] parent of spotlight layer
@@ -32,6 +31,7 @@ class Spotlight
         this.canvas.style.position = 'fixed'
         this.canvas.style.top = this.options.x || 0
         this.canvas.style.left = this.options.y || 0
+        this.canvas.style.pointerEvents = 'none'
 
         /**
          * the list of spotlights. if manually changed then call redraw() to update the canvas

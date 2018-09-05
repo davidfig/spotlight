@@ -1,6 +1,6 @@
 {
-  "name": "spotlight-ui",
-  "version": "0.1.0",
+  "name": "spotlight-canvas",
+  "version": "1.0.0",
   "description": "a simple canvas-based spotlight that can be used to highlight elements",
   "main": "dist/spotlight.js",
   "directories": {
@@ -11,16 +11,17 @@
     "build-demo": "browserify -o docs/index.js docs/code.js",
     "docs": "jsdoc -c .jsdoc.json",
     "bundle": "browserify dist/spotlight.js -o bundle/spotlight.js && uglifyjs -mc -o bundle/spotlight.min.js dist/spotlight.js",
-    "transpile": "babel src/ --out-dir dist --source-maps inline && cp src/defaults.json dist/defaults.json",
+    "transpile": "babel src/ --out-dir dist --source-maps inline",
     "prepublishOnly": "npm run transpile && npm run bundle && npm run build-demo && npm run docs"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/davidfig/pixi-spotlight.git"
+    "url": "git+https://github.com/davidfig/spotlight.git"
   },
   "keywords": [
     "spotlight",
     "DOM",
+    "canvas",
     "circle",
     "polygon",
     "UI"
@@ -28,9 +29,9 @@
   "author": "David Figatner",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/davidfig/pixi-spotlight/issues"
+    "url": "https://github.com/davidfig/spotlight/issues"
   },
-  "homepage": "https://github.com/davidfig/pixi-spotlight#readme",
+  "homepage": "https://github.com/davidfig/spotlight#readme",
   "dependencies": {
     "penner": "^0.1.3"
   },

@@ -7,7 +7,9 @@ let _spotlight
 function spotlight()
 {
     _spotlight = new Spotlight()
-    _spotlight.polygon([100, 10, 280, 10, 270, 50, 115, 45], true)
+    const div = document.getElementsByClassName('titleCode')[0]
+    const rect = div.getBoundingClientRect()
+    _spotlight.polygon([rect.left, rect.top, rect.right, rect.top, rect.right, rect.bottom, rect.left, rect.bottom], true)
     _spotlight.circle(window.innerWidth / 2, window.innerHeight / 2, RADIUS)
     _spotlight.fadeIn()
 

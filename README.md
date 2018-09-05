@@ -1,4 +1,4 @@
-# spotlight-ui
+# spotlight-canvas
 a simple canvas-based spotlight that can be used to highlight elements
 
 Features:
@@ -7,16 +7,15 @@ Features:
 * spotlight areas can be dynamically changed or cleared
 * the canvas includes fadeIn and fadeOut functions
 
-
 ## Live Example
-[davidfig.github.io/spotlight-ui/](https://davidfig.github.io/spotlight-ui/)
+[davidfig.github.io/spotlight/](https://davidfig.github.io/spotlight/)
 
 ## Rationale
 I needed a way to highlight elements in my UI. 
 
 ## Simple Example
 ```js
-var Spotlight = require('spotlight-ui');
+var Spotlight = require('spotlight-canvas');
 
 // create the scrollbox
 var spotlight = new Spotlight();
@@ -28,12 +27,12 @@ spotlight.circle(100, 100, 200);
 
 ## Usage
 
-npm i spotlight-ui
+npm i spotlight-canvas
 
 ```
 
 ## API Documentation
-[https://davidfig.github.io/spotlight-ui/jsdoc/](https://davidfig.github.io/spotlight-ui/jsdoc/)
+[https://davidfig.github.io/spotlight/jsdoc/](https://davidfig.github.io/spotlight/jsdoc/)
 
 ## license  
 MIT License  

@@ -1,5 +1,5 @@
 {
-    "applicationName": "spotlight-ui",
+    "applicationName": "spotlight-canvas",
     "disqus": "",
     "openGraph": {
         "title": "",
@@ -9,7 +9,7 @@
         "url": ""
     },
     "meta": {
-        "title": "spotlight-ui",
+        "title": "spotlight-canvas",
         "description": "",
         "keyword": ""
     },
@@ -39,12 +39,12 @@
         "default": {
             "outputSourceFiles": true
         },
-        "applicationName": "spotlight-ui",
+        "applicationName": "spotlight-canvas",
         "footer"        : "by YOPEY YOPEY LLC (yopeyopey.com)",
         "copyright"     : "Copyright © 2018 YOPEY YOPEY LLC.",
         "meta": {
-            "title": "spotlight-ui API Documentation",
-            "description": "Documentation for spotlight-ui library",
+            "title": "spotlight-canvas API Documentation",
+            "description": "Documentation for spotlight-canvas library",
             "keyword": "docs, documentation, html5, javascript, jsdoc, spotlight, circle, polygon, dom"
         },
         "matomo": {
