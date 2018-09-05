@@ -26,7 +26,7 @@ class Spotlight
         }
         else
         {
-            this.parent.appendChild(this.canvas)
+            this.options.parent.appendChild(this.canvas)
         }
         this.canvas.style.position = 'fixed'
         this.canvas.style.top = this.options.x || 0
@@ -77,6 +77,11 @@ class Spotlight
                     context.fill()
                     break
 
+                case 'rectangle':
+                    context.beginPath()
+                    context.fillRect(entry.x, entry.y, entry.width, entry.height)
+                    break
+
                 case 'polygon':
                     context.beginPath()
                     context.moveTo(entry.points[0], entry.points[1])
@@ -86,7 +91,6 @@ class Spotlight
                     }
                     context.closePath()
                     context.fill()
-                    context.stroke()
                     break
             }
         }
@@ -96,6 +100,7 @@ class Spotlight
     /**
      * clears any cutouts
      * @param {boolean} [noRedraw] don't force a canvas redraw
+     * @returns {Spotlight}
      */
     clear(noRedraw)
     {
@@ -104,6 +109,7 @@ class Spotlight
         {
             this.resize()
         }
+        return this
     }
 
     /**
@@ -112,6 +118,7 @@ class Spotlight
      * @param {number} y
      * @param {number} radius
      * @param {boolean} [noRedraw] don't force a canvas redraw
+     * @returns {Spotlight}
      */
     circle(x, y, radius, noRedraw)
     {
@@ -123,9 +130,29 @@ class Spotlight
     }
 
     /**
+     * adds a rectangle spotlight
+     * @param {number} x
+     * @param {number} y
+     * @param {number} width
+     * @param {number} height
+     * @param {boolean} noRedraw don't force a canvas redraw
+     * @returns {Spotlight}
+     */
+    rectangle(x, y, width, height, noRedraw)
+    {
+        this.openings.push({ type: 'rectangle', x, y, width, height })
+        if (!noRedraw)
+        {
+            this.redraw()
+        }
+        return this
+    }
+
+    /**
      * adds a polygon spotlight
      * @param {number[]} points - [x1, y1, x2, y2, ... xn, yn]
      * @param {boolean} [noRedraw] don't force a canvas redraw
+     * @returns {Spotlight}
      */
     polygon(points, noRedraw)
     {
@@ -134,6 +161,7 @@ class Spotlight
         {
             this.redraw()
         }
+        return this
     }
 
     /**
@@ -197,6 +225,50 @@ class Spotlight
         options.start = typeof options.start === 'undefined' ? 1 : options.start
         options.end = typeof options.end === 'undefined' ? 0 : options.end
         this.fadeIn(options)
+    }
+
+    /**
+     * show spotlight
+     * @return {Spotlight}
+     */
+    show()
+    {
+        this.canvas.style.display = 'block'
+        return this
+    }
+
+    /**
+     * hide spotlight
+     * @return {Spotlight}
+     */
+    hide()
+    {
+        this.canvas.style.display = 'none'
+        return this
+    }
+
+    /**
+     * checks whether spotlight is visible
+     * @returns {boolean}
+     */
+    isVisible()
+    {
+        return this.canvas.style.display === 'block'
+    }
+
+    /**
+     * removes spotlight
+     */
+    destroy()
+    {
+        if (!this.options.parent)
+        {
+            document.body.removeChild(this.canvas)
+        }
+        else
+        {
+            this.options.parent.removeChild(this.canvas)
+        }
     }
 }
 
