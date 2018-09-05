@@ -25,10 +25,10 @@ spotlight.circle(100, 100, 200);
 
 ```
 
-## Usage
+## Installation
 
+```
 npm i spotlight-canvas
-
 ```
 
 ## API Documentation
