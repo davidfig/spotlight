@@ -31,7 +31,7 @@ var Spotlight = function () {
         if (!this.options.parent) {
             document.body.appendChild(this.canvas);
         } else {
-            this.parent.appendChild(this.canvas);
+            this.options.parent.appendChild(this.canvas);
         }
         this.canvas.style.position = 'fixed';
         this.canvas.style.top = this.options.x || 0;
@@ -47,7 +47,8 @@ var Spotlight = function () {
     }
 
     /**
-     * resize the layer to ensure entire screen is covered
+     * resize the layer to ensure entire screen is covered; also calls redraw()
+     * @returns {Spotlight}
      */
 
 
@@ -59,10 +60,12 @@ var Spotlight = function () {
             this.canvas.width = width;
             this.canvas.height = height;
             this.redraw();
+            return this;
         }
 
         /**
          * force a redraw of the spotlight (usually called internally)
+         * @returns {Spotlight}
          */
 
     }, {
@@ -92,6 +95,11 @@ var Spotlight = function () {
                             context.fill();
                             break;
 
+                        case 'rectangle':
+                            context.beginPath();
+                            context.fillRect(entry.x, entry.y, entry.width, entry.height);
+                            break;
+
                         case 'polygon':
                             context.beginPath();
                             context.moveTo(entry.points[0], entry.points[1]);
@@ -100,7 +108,6 @@ var Spotlight = function () {
                             }
                             context.closePath();
                             context.fill();
-                            context.stroke();
                             break;
                     }
                 }
@@ -120,11 +127,13 @@ var Spotlight = function () {
             }
 
             context.restore();
+            return this;
         }
 
         /**
          * clears any cutouts
          * @param {boolean} [noRedraw] don't force a canvas redraw
+         * @returns {Spotlight}
          */
 
     }, {
@@ -134,6 +143,7 @@ var Spotlight = function () {
             if (!noRedraw) {
                 this.resize();
             }
+            return this;
         }
 
         /**
@@ -142,6 +152,7 @@ var Spotlight = function () {
          * @param {number} y
          * @param {number} radius
          * @param {boolean} [noRedraw] don't force a canvas redraw
+         * @returns {Spotlight}
          */
 
     }, {
@@ -154,9 +165,30 @@ var Spotlight = function () {
         }
 
         /**
+         * adds a rectangle spotlight
+         * @param {number} x
+         * @param {number} y
+         * @param {number} width
+         * @param {number} height
+         * @param {boolean} noRedraw don't force a canvas redraw
+         * @returns {Spotlight}
+         */
+
+    }, {
+        key: 'rectangle',
+        value: function rectangle(x, y, width, height, noRedraw) {
+            this.openings.push({ type: 'rectangle', x: x, y: y, width: width, height: height });
+            if (!noRedraw) {
+                this.redraw();
+            }
+            return this;
+        }
+
+        /**
          * adds a polygon spotlight
          * @param {number[]} points - [x1, y1, x2, y2, ... xn, yn]
          * @param {boolean} [noRedraw] don't force a canvas redraw
+         * @returns {Spotlight}
          */
 
     }, {
@@ -166,6 +198,7 @@ var Spotlight = function () {
             if (!noRedraw) {
                 this.redraw();
             }
+            return this;
         }
 
         /**
@@ -201,6 +234,7 @@ var Spotlight = function () {
          * @param {number} [options.end=1] ending opacity
          * @param {number} [options.duration=1000] duration of fade in milliseconds
          * @param {string|Function} [options.ease='easeInOutSine'] easing function (@see https://www.npmjs.com/package/penner)
+         * @returns {Spotlight}
          */
 
     }, {
@@ -217,6 +251,7 @@ var Spotlight = function () {
             var duration = options.duration || 1000;
             this.last = performance.now();
             this.fade({ time: 0, start: start, end: end, duration: duration, ease: ease });
+            return this;
         }
 
         /**
@@ -226,6 +261,7 @@ var Spotlight = function () {
          * @param {number} [options.end=0] ending opacity
          * @param {number} [options.duration=1000] duration of fade in milliseconds
          * @param {string|Function} [options.ease='easeInOutSine'] easing function (@see https://www.npmjs.com/package/penner)
+         * @returns {Spotlight}
          */
 
     }, {
@@ -235,6 +271,56 @@ var Spotlight = function () {
             options.start = typeof options.start === 'undefined' ? 1 : options.start;
             options.end = typeof options.end === 'undefined' ? 0 : options.end;
             this.fadeIn(options);
+            return this;
+        }
+
+        /**
+         * show spotlight
+         * @return {Spotlight}
+         */
+
+    }, {
+        key: 'show',
+        value: function show() {
+            this.canvas.style.display = 'block';
+            return this;
+        }
+
+        /**
+         * hide spotlight
+         * @return {Spotlight}
+         */
+
+    }, {
+        key: 'hide',
+        value: function hide() {
+            this.canvas.style.display = 'none';
+            return this;
+        }
+
+        /**
+         * checks whether spotlight is visible
+         * @returns {boolean}
+         */
+
+    }, {
+        key: 'isVisible',
+        value: function isVisible() {
+            return this.canvas.style.display === 'block';
+        }
+
+        /**
+         * removes spotlight
+         */
+
+    }, {
+        key: 'destroy',
+        value: function destroy() {
+            if (!this.options.parent) {
+                document.body.removeChild(this.canvas);
+            } else {
+                this.options.parent.removeChild(this.canvas);
+            }
         }
     }]);
 

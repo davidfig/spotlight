@@ -42,7 +42,8 @@ class Spotlight
     }
 
     /**
-     * resize the layer to ensure entire screen is covered
+     * resize the layer to ensure entire screen is covered; also calls redraw()
+     * @returns {Spotlight}
      */
     resize()
     {
@@ -51,10 +52,12 @@ class Spotlight
         this.canvas.width = width
         this.canvas.height = height
         this.redraw()
+        return this
     }
 
     /**
      * force a redraw of the spotlight (usually called internally)
+     * @returns {Spotlight}
      */
     redraw()
     {
@@ -95,6 +98,7 @@ class Spotlight
             }
         }
         context.restore()
+        return this
     }
 
     /**
@@ -194,6 +198,7 @@ class Spotlight
      * @param {number} [options.end=1] ending opacity
      * @param {number} [options.duration=1000] duration of fade in milliseconds
      * @param {string|Function} [options.ease='easeInOutSine'] easing function (@see https://www.npmjs.com/package/penner)
+     * @returns {Spotlight}
      */
     fadeIn(options)
     {
@@ -209,6 +214,7 @@ class Spotlight
         const duration = options.duration || 1000
         this.last = performance.now()
         this.fade({ time: 0, start, end, duration, ease })
+        return this
     }
 
     /**
@@ -218,6 +224,7 @@ class Spotlight
      * @param {number} [options.end=0] ending opacity
      * @param {number} [options.duration=1000] duration of fade in milliseconds
      * @param {string|Function} [options.ease='easeInOutSine'] easing function (@see https://www.npmjs.com/package/penner)
+     * @returns {Spotlight}
      */
     fadeOut(options)
     {
@@ -225,6 +232,7 @@ class Spotlight
         options.start = typeof options.start === 'undefined' ? 1 : options.start
         options.end = typeof options.end === 'undefined' ? 0 : options.end
         this.fadeIn(options)
+        return this
     }
 
     /**
