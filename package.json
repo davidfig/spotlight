@@ -1,6 +1,6 @@
 {
   "name": "spotlight-canvas",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "a simple canvas-based spotlight that can be used to highlight elements",
   "main": "dist/spotlight.js",
   "directories": {

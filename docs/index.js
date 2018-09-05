@@ -17540,13 +17540,14 @@ class Spotlight
         const difference = now - this.last
         this.last = now
         data.time += difference
+        const change = data.end - data.start
         if (data.time > data.duration)
         {
             this.canvas.style.opacity = data.end
         }
         else
         {
-            this.canvas.style.opacity = data.ease(data.time, data.start, data.end, data.duration)
+            this.canvas.style.opacity = data.ease(data.time, data.start, change, data.duration)
             this.request = requestAnimationFrame(() => this.fade(data))
         }
     }
@@ -17567,8 +17568,8 @@ class Spotlight
             cancelAnimationFrame(this.request)
         }
         options = options || {}
-        const start = options.start || 0
-        const end = options.end || 1
+        const start = typeof options.start === 'undefined' ? 0 : options.start
+        const end = typeof options.end === 'undefined' ? 1 : options.end
         const ease = !options.ease ? Penner.easeInOutSine : typeof options.ease === 'string' ? Penner[options.ease] : options.ease
         this.canvas.style.opacity = start
         const duration = options.duration || 1000

@@ -217,10 +217,11 @@ var Spotlight = function () {
             var difference = now - this.last;
             this.last = now;
             data.time += difference;
+            var change = data.end - data.start;
             if (data.time > data.duration) {
                 this.canvas.style.opacity = data.end;
             } else {
-                this.canvas.style.opacity = data.ease(data.time, data.start, data.end, data.duration);
+                this.canvas.style.opacity = data.ease(data.time, data.start, change, data.duration);
                 this.request = requestAnimationFrame(function () {
                     return _this.fade(data);
                 });
@@ -244,8 +245,8 @@ var Spotlight = function () {
                 cancelAnimationFrame(this.request);
             }
             options = options || {};
-            var start = options.start || 0;
-            var end = options.end || 1;
+            var start = typeof options.start === 'undefined' ? 0 : options.start;
+            var end = typeof options.end === 'undefined' ? 1 : options.end;
             var ease = !options.ease ? Penner.easeInOutSine : typeof options.ease === 'string' ? Penner[options.ease] : options.ease;
             this.canvas.style.opacity = start;
             var duration = options.duration || 1000;
