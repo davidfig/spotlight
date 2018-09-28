@@ -220,6 +220,9 @@ var Spotlight = function () {
             var change = data.end - data.start;
             if (data.time > data.duration) {
                 this.canvas.style.opacity = data.end;
+                if (data.onEnd) {
+                    data.onEnd();
+                }
             } else {
                 this.canvas.style.opacity = data.ease(data.time, data.start, change, data.duration);
                 this.request = requestAnimationFrame(function () {
@@ -235,6 +238,7 @@ var Spotlight = function () {
          * @param {number} [options.end=1] ending opacity
          * @param {number} [options.duration=1000] duration of fade in milliseconds
          * @param {string|Function} [options.ease='easeInOutSine'] easing function (@see https://www.npmjs.com/package/penner)
+         * @param {Function} [options.onEnd] callback after fading
          * @returns {Spotlight}
          */
 
@@ -248,10 +252,11 @@ var Spotlight = function () {
             var start = typeof options.start === 'undefined' ? 0 : options.start;
             var end = typeof options.end === 'undefined' ? 1 : options.end;
             var ease = !options.ease ? Penner.easeInOutSine : typeof options.ease === 'string' ? Penner[options.ease] : options.ease;
+            var onEnd = options.onEnd;
             this.canvas.style.opacity = start;
             var duration = options.duration || 1000;
             this.last = performance.now();
-            this.fade({ time: 0, start: start, end: end, duration: duration, ease: ease });
+            this.fade({ time: 0, start: start, end: end, duration: duration, ease: ease, onEnd: onEnd });
             return this;
         }
 
@@ -262,6 +267,7 @@ var Spotlight = function () {
          * @param {number} [options.end=0] ending opacity
          * @param {number} [options.duration=1000] duration of fade in milliseconds
          * @param {string|Function} [options.ease='easeInOutSine'] easing function (@see https://www.npmjs.com/package/penner)
+         * @param {Function} [options.onEnd] callback after fading
          * @returns {Spotlight}
          */
 

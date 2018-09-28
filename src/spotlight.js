@@ -184,6 +184,10 @@ class Spotlight
         if (data.time > data.duration)
         {
             this.canvas.style.opacity = data.end
+            if (data.onEnd)
+            {
+                data.onEnd()
+            }
         }
         else
         {
@@ -199,6 +203,7 @@ class Spotlight
      * @param {number} [options.end=1] ending opacity
      * @param {number} [options.duration=1000] duration of fade in milliseconds
      * @param {string|Function} [options.ease='easeInOutSine'] easing function (@see https://www.npmjs.com/package/penner)
+     * @param {Function} [options.onEnd] callback after fading
      * @returns {Spotlight}
      */
     fadeIn(options)
@@ -211,10 +216,11 @@ class Spotlight
         const start = typeof options.start === 'undefined' ? 0 : options.start
         const end = typeof options.end === 'undefined' ? 1 : options.end
         const ease = !options.ease ? Penner.easeInOutSine : typeof options.ease === 'string' ? Penner[options.ease] : options.ease
+        const onEnd = options.onEnd
         this.canvas.style.opacity = start
         const duration = options.duration || 1000
         this.last = performance.now()
-        this.fade({ time: 0, start, end, duration, ease })
+        this.fade({ time: 0, start, end, duration, ease, onEnd })
         return this
     }
 
@@ -225,6 +231,7 @@ class Spotlight
      * @param {number} [options.end=0] ending opacity
      * @param {number} [options.duration=1000] duration of fade in milliseconds
      * @param {string|Function} [options.ease='easeInOutSine'] easing function (@see https://www.npmjs.com/package/penner)
+     * @param {Function} [options.onEnd] callback after fading
      * @returns {Spotlight}
      */
     fadeOut(options)
